@@ -4,18 +4,22 @@ import rl "vendor:raylib"
 import "core:time"
 //import "core:fmt"
 
+SCREEN_WIDTH  :: 800
+SCREEN_HEIGHT :: 600
+PADDLE_WIDTH  :: 20
+PADDLE_HEIGHT :: 100
+PADDLE_SPEED  :: 200
+
+BALL_SIZE :: 10
+BALL_SPEED :: 250
+
 main :: proc(){
     //Variables
-    screen_width : i32 = 800;
-    screen_height : i32 = 600;
-    paddle_width : f32 = 20;
-    paddle_height : f32 = 100;
-    paddle_speed : f32 = 200;
-    p1 := paddle_init(20,20,paddle_width,paddle_height, paddle_speed);
-    p2 := paddle_init(f32(screen_width)-20.0-paddle_width,f32(screen_height)-20.0-paddle_height,paddle_width,paddle_height, paddle_speed);
-    dt : f32;
+    p1 := paddle_init(20,20,PADDLE_WIDTH,PADDLE_HEIGHT, PADDLE_SPEED, .W, .S);
+    p2 := paddle_init(SCREEN_WIDTH-20.0-PADDLE_WIDTH,SCREEN_HEIGHT-20.0-PADDLE_HEIGHT,PADDLE_WIDTH,PADDLE_HEIGHT, PADDLE_SPEED, .UP, .DOWN);
+    ball := ball_init((SCREEN_WIDTH-BALL_SIZE)/2,(SCREEN_HEIGHT-BALL_SIZE)/2,BALL_SIZE, BALL_SIZE, BALL_SPEED);
 
-    rl.InitWindow(screen_width, screen_height, "Pang");
+    rl.InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pang");
     
     prev: time.Tick
     
@@ -28,10 +32,12 @@ main :: proc(){
 
         //Movement
         paddle_move(&p1, dt)
+        paddle_move(&p2, dt)
 
         //Rendering
         paddle_render(p1);
         paddle_render(p2);
+        ball_render(ball);
 
         rl.EndDrawing()
     }
