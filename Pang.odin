@@ -2,7 +2,7 @@ package Pang
 
 import rl "vendor:raylib"
 import "core:time"
-//import "core:fmt"
+import "core:fmt"
 
 SCREEN_WIDTH  :: 800
 SCREEN_HEIGHT :: 600
@@ -12,6 +12,8 @@ PADDLE_SPEED  :: 200
 
 BALL_SIZE :: 10
 BALL_SPEED :: 250
+
+MODE_TOGGLE := false;
 
 main :: proc(){
     //Variables
@@ -26,13 +28,32 @@ main :: proc(){
     for !rl.WindowShouldClose() {
         
         dt := f32(time.duration_seconds(time.tick_lap_time(&prev)));
+
+        //Input
+        if(rl.IsKeyPressed(.M)){
+            if(MODE_TOGGLE){
+                MODE_TOGGLE = false;
+            }
+            else
+            {
+                MODE_TOGGLE = true;
+            }
+            fmt.println(MODE_TOGGLE);
+        }
         
         rl.BeginDrawing();
         rl.ClearBackground(rl.BLACK);
 
         //Movement
-        paddle_move(&p1, dt)
-        paddle_move(&p2, dt)
+        paddle_move(&p1, dt);
+        paddle_move(&p2, dt);
+        if(MODE_TOGGLE){
+            ball_follow(&ball);
+        }
+        else
+        {
+            ball_move(&ball, dt);
+        }
 
         //Rendering
         paddle_render(p1);
