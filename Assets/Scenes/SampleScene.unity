@@ -396,6 +396,8 @@ MonoBehaviour:
   paddlePrefab: {fileID: 3917289688443565940, guid: 076041a81566ad548a525eaea5bf5e83, type: 3}
   paddleSize: {x: 0.2, y: 1.5}
   paddleOffsetFromCentre: 7
+  ballPrefab: {fileID: 3938756666647272241, guid: 148cb79a47ef1a545867ce68e400fedf, type: 3}
+  ballSize: {x: 0.2, y: 0.2}
 --- !u!4 &892494520
 Transform:
   m_ObjectHideFlags: 0
